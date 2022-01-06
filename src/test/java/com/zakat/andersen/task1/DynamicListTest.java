@@ -19,6 +19,16 @@ class DynamicListTest {
     String str6 = "F";
     String nullString = null;
 
+    Student s1 = new Student("A", 7);
+    Student s2 = new Student("B", 8);
+    Student s3 = new Student("C", 3);
+    Student s10 = new Student("A", 1);
+    Student s4 = new Student("D", 4);
+    Student s5 = new Student("E", 5);
+    Student s6 = new Student("F", 6);
+    Student s7 = new Student("G", 2);
+
+
 
     @Test
     void add() {
@@ -33,6 +43,40 @@ class DynamicListTest {
         assertEquals(expectedCounter, testList.getNumberOfElements());
         assertEquals(expectedTrue, testList.add(testString1));
         assertEquals(expectedFalse, testList1.add(nullString));
+    }
+
+    @Test
+    void sort(){
+        DynamicList<Student> list = new DynamicList<>();
+        DynamicList<Student> expectedList = new DynamicList<>();
+
+        Student s1 = new Student("A", 7);
+        Student s2 = new Student("B", 8);
+        Student s3 = new Student("C", 3);
+        Student s10 = new Student("AA", 1);
+        Student s4 = new Student("D", 4);
+        Student s5 = new Student("E", 5);
+        Student s6 = new Student("F", 6);
+        Student s7 = new Student("G", 2);
+        list.add(s1);
+        list.add(s2);
+        list.add(s3);
+        list.add(s4);
+        list.add(s5);
+        list.add(s6);
+        list.add(s7);
+        list.add(s10);
+        expectedList.add(s10);
+        expectedList.add(s7);
+        expectedList.add(s3);
+        expectedList.add(s4);
+        expectedList.add(s5);
+        expectedList.add(s6);
+        expectedList.add(s1);
+        expectedList.add(s2);
+        Quicksort.quicksortWithComparator(list, 0, list.getNumberOfElements()-1, new StudentComparator());
+        assertEquals(expectedList, list);
+
     }
 
     @Test

@@ -1,6 +1,6 @@
 package com.zakat.andersen.task1;
 
-import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Class quicksort give realization static method quicksort
@@ -8,7 +8,6 @@ import java.util.Arrays;
 
 public class Quicksort {
     public static void main(String[] args) {
-
 
     }
 
@@ -59,7 +58,7 @@ public class Quicksort {
         return indexStart;
     }
 
-    /**
+        /**
      * Support method change elements to base subarray
      *
      * @param array
@@ -73,61 +72,47 @@ public class Quicksort {
     }
 
 
-//
-//        int[] result = new int[partitonArray.length];
-//        int counterPositionResult = 0;
-//        int opora = (from+(to-from))/2;
-//        int initCounterLess=0;
-//        int initCounterMore=0;
-//        for(int el: partitonArray){
-//            if(el<partitonArray[opora])
-//                initCounterLess++;
-//            if(el>=partitonArray[opora])
-//                initCounterMore++;
-//        }
-//        int [] divideArrayLess = new int[initCounterLess];
-//        int [] divideArrayMore = new int[initCounterMore];
-//        int counterDivideLess=0;
-//        int counterDivideMore=0;
-//        for (int i = from; i<partitonArray.length; i++){
-//            if(partitonArray[i]<partitonArray[opora]){
-//                divideArrayLess[counterDivideLess] = partitonArray[i];
-//                counterDivideLess++;
-//            }
-//            if(partitonArray[i]>=partitonArray[opora]){
-//                divideArrayMore[counterDivideMore] = partitonArray[i];
-//counterDivideMore++;
-//            }
-//        }
-//
-//        System.out.println(Arrays.toString(divideArrayLess));
-//
-//        System.out.println(Arrays.toString(divideArrayMore));
-//        if(divideArrayLess.length>2)
-//            movingLess(divideArrayLess, 0, divideArrayLess.length-1);
-//if(divideArrayLess.length==2){
-//    if (divideArrayLess[0]>= divideArrayLess[1]){
-//        int temp = divideArrayLess[0];
-//        divideArrayLess[0]=divideArrayLess[1];
-//        result[counterPositionResult]= divideArrayLess[0];
-//        counterPositionResult++;
-//        result[counterPositionResult] = divideArrayLess[1];
-//        counterPositionResult++;
-//    } else {
-//        result[counterPositionResult]= divideArrayLess[0];
-//        counterPositionResult++;
-//        result[counterPositionResult] = divideArrayLess[1];
-//        counterPositionResult++;
-//    }}
-//    if (divideArrayLess.length==1) {
-//        result[counterPositionResult] = divideArrayLess[0];
-//        counterPositionResult++;
-//    }
-//        if(divideArrayLess.length==0){
-//        }
-//
-//
-//        System.out.println("Result is " + Arrays.toString(result));
+    public static void quicksortWithComparator(DynamicList list, int from, int to, Comparator comparator){
+        if (from < to) {
+            int opIndex = divideArrayList(list, from, to, comparator);
+            quicksortWithComparator(list, from, opIndex - 1, comparator);
+            quicksortWithComparator(list, opIndex, to,comparator);
+
+        }
+    }
+
+    private static int divideArrayList(DynamicList list, int from, int to, Comparator comparator) {
+
+        int indexStart = from;
+        int indexEnd = to;
+        int opIndex = from + (to - from) / 2;
+
+        while (indexStart <= indexEnd) {
+            while (comparator.compare(list.getElementToIndex(indexStart), list.getElementToIndex(opIndex))<0) {
+                indexStart++;
+            }
+            while (comparator.compare(list.getElementToIndex(indexEnd),  list.getElementToIndex(opIndex)) >0) {
+                indexEnd--;
+            }
+            if (indexStart <= indexEnd) {
+                changeElementToList(list, indexStart, indexEnd);
+                indexStart++;
+                indexEnd--;
+            }
+        }
+        return indexStart;
+    }
+
+    private static void changeElementToList(DynamicList dynamicList, int indexLeft, int indexRight) {
+        DynamicList<Object> temp  = new DynamicList<>();
+        temp.add(dynamicList.getElementToIndex(indexLeft));
+
+        dynamicList.setElement(indexLeft, dynamicList.getElementToIndex(indexRight));
+        dynamicList.setElement(indexRight, temp.getElementToIndex(0));
+    }
+
+
+
 }
 
 

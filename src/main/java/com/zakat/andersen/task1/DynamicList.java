@@ -1,8 +1,6 @@
 package com.zakat.andersen.task1;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -82,6 +80,14 @@ public class DynamicList<E> implements Iterable<E> {
             add((E) element);
         }
         return true;
+    }
+
+    /**
+     * Sorting DL use given Comparator
+     * @param comparator
+     */
+    public void sort(Comparator<E> comparator){
+        Quicksort.quicksortWithComparator(this, 0, this.getNumberOfElements()-1, comparator);
     }
 
     /**
@@ -340,5 +346,20 @@ public class DynamicList<E> implements Iterable<E> {
     @Override
     public Spliterator<E> spliterator() {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DynamicList<?> that = (DynamicList<?>) o;
+        return BASE_SIZE == that.BASE_SIZE && size == that.size && counterOfElements == that.counterOfElements && Arrays.equals(objects, that.objects);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(BASE_SIZE, size, counterOfElements);
+        result = 31 * result + Arrays.hashCode(objects);
+        return result;
     }
 }
